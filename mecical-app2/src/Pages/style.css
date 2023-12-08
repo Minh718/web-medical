@@ -1,0 +1,46 @@
+.registerContainer {
+    margin: 0;
+    padding: 0;
+    padding-top: 20px;
+    background-image: url('../img/carousel-2.jpg'); /* Đường dẫn đến hình ảnh của bạn */
+    background-size: cover; /* Để hình ảnh bao phủ toàn bộ màn hình */
+    background-position: center; /* Để căn giữa hình ảnh */
+    background-repeat: no-repeat; /* Ngăn chặn lặp lại hình ảnh */
+    min-height: calc(100vh - 80px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+}
+.formRegister {
+    width: 700px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.formLogin {
+    width: 500px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.formRegister > h1, .formLogin > h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+.formRegister > p, .formLogin > p {
+    text-align: center;
+    color: red;
+    margin-bottom: 0;
+    margin-bottom: 10px;
+
+}
+.gotoRegister {
+    display: block;
+    color: #000;
+    margin-top: 10px;
+    font-weight: bold;
+}
