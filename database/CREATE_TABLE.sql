@@ -460,10 +460,10 @@ BEGIN
     DECLARE due_date DATE;
 
     -- Lấy ngày hiện tại
-    SET current_date = CURDATE();
+    SET NEW._timestamp = CURDATE();
 
     -- Tính toán ngày thanh toán cuối cùng (5 ngày kể từ ngày tạo)
-    SET due_date = DATE_ADD(NEW.creation_date, INTERVAL 5 DAY);
+    SET due_date = DATE_ADD(NEW._timestamp, INTERVAL 5 DAY);
 END //
 
 DELIMITER ;
