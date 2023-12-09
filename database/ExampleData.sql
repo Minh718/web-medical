@@ -87,3 +87,35 @@ INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `add
                     VALUES ('126','Văn','Công','N','male','2000-07-10','88 Mạc Đĩnh Chi','vancongN@yahoo.com','149149',TRUE,'vancongN','vancongN149','user');
 INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
                     VALUES ('127','Vũ','Phụng','T','female','2003-05-09','74 Mạc Đĩnh Chi','vuphungT@yahoo.com','150150',TRUE,'vuphungT','vuphungT150','user');
+
+--Add dữ liệu vào bảng PATIENT
+INSERT INTO `patient`(`id`) VALUES ('117');
+INSERT INTO `patient`(`id`) VALUES ('118');
+INSERT INTO `patient`(`id`) VALUES ('119');
+INSERT INTO `patient`(`id`) VALUES ('120');
+INSERT INTO `patient`(`id`) VALUES ('121');
+INSERT INTO `patient`(`id`) VALUES ('122');
+INSERT INTO `patient`(`id`) VALUES ('123');
+INSERT INTO `patient`(`id`) VALUES ('124');
+INSERT INTO `patient`(`id`) VALUES ('125');
+INSERT INTO `patient`(`id`) VALUES ('126');
+INSERT INTO `patient`(`id`) VALUES ('127');
+
+--Add dữ liệu vào bảng MEDICAL_STAFF
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('100','2018-12-20','6','100000','12000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('101','2018-12-20','5','101000','10000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('102','2018-11-20','5','102000','10000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('103','2018-10-21','4','103000','8000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('104','2018-09-23','6','104000','6000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('105','2018-08-24','5','105000','5000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('106','2018-08-13','2','106000','2000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('107','2018-09-25','5','107000','10000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('108','2017-09-26','7','108000','14000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('109','2018-08-27','5','109000','10000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('110','2018-07-28','6','110000','12000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('111','2018-08-29','5','111000','10000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('112','2018-07-30','5','112000','5000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('113','2017-09-30','4','113000','8000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('114','2017-08-31','2','114000','2000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('115','2018-01-31','6','115000','12000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('116','2018-02-15','5','116000','5000000','nurse');
