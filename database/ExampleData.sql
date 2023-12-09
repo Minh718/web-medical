@@ -119,3 +119,27 @@ INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary
 INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('114','2017-08-31','2','114000','2000000','nurse');
 INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('115','2018-01-31','6','115000','12000000','doctor');
 INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('116','2018-02-15','5','116000','5000000','nurse');
+
+--Add dữ liệu vào bảng SERVICE
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('1','Siêu âm','100000','Phát hiện bệnh từ bên trong cơ thể');
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('2','Nội soi Dạ dày','2000000','Phát hiện bệnh từ bên trong dạ dày, có gây mê');
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('3','Nội soi Đại tràng','2300000','Phát hiện bệnh từ bên trong đại tràng, có gây mê');
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('4','Đo điện tim','150000','Đo số nhịp tim đập trên một đơn vị thời gian');
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('5','X quang Phổi','200000','Chụp vùng phổi để phát hiện các bệnh liên quan');
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('6','Đo huyết áp tứ chi','250000','Đo huyết áp của các cơ của tứ chi');
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('7','Đo cận-viễn-loạn','100000','Đo mắt và phát hiện các bệnh về mắt');
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('8','Đo điện não','400000','Đo xung điện trên vùng não bộ');
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('9','Đo xơ vữa động mạch','350000','Đo tình trạng mảng xơ vữa trong thành động mạch');
+INSERT INTO `service`(`id`, `_name`, `cost`, `_desc`) VALUES ('10','Khám tổng quát','210000','Khám tất cả các chức năng cơ bản của cơ thể');
+
+--Add dữ liệu vào bảng MEDICINE
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('1','Aspirin','36000','Trị xơ vữa động mạch');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('2','Clopidogrel','91000','Trợ tim, bổ tim');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('3','Organika Cordyceps','650000','Bổ phổi');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('4','Siro ho Bảo Thanh','44000','Bổ đường hô hấp');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('5','Omega-3','200000','Bổ mắt, nhiều vitaminA');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('6','Hoạt huyết 1-1','100000','Tăng cường máu lên não');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('7','CumaGold','135000','Trị đại tràng');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('8','Rohto Antibacterial','54000','Bổ mắt, kháng viêm mắt');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('9','V.Rohto Vitamin','53000','Bổ mắt, chậm tăng độ');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('10','Digoxin','300000','Tốt cho tim mạch');
