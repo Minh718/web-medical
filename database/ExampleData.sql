@@ -65,3 +65,25 @@ INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `add
 INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
                     VALUES ('116','Nguyễn','Lê','U','female','1989-09-02','29 Nguyễn Nhạc','nguyenleU@yahoo.com','139139',TRUE,'nguyenleU','nguyenleU139','staff');
 -----TYPE = user:
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('117','Đỗ','Anh','B','male','2000-02-28','17 Mai Hắc Đế','doanhB@yahoo.com','140140',TRUE,'doanhB','doanhB140','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('118','Đỗ','Hải','D','male','2001-03-01','18 Mai An Tiêm','dohaiD@yahoo.com','141141',TRUE,'dohaiD','dohaiD141','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('119','Đỗ','Thủ','K','male','2001-04-02','19 Mai An Tiêm','dothuK@yahoo.com','142142',TRUE,'dothuK','dothuK142','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('120','Nguyễn','Hồng','L','female','2002-08-30','22 Ngô Quyền','nguyenhongL@yahoo.com','143143',TRUE,'nguyenhongL','nguyenhongL143','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('121','Nguyễn','Thị','P','female','1999-08-15','33 Hải Thượng Lãn Ông','nguyenthiP@yahoo.com','144144',TRUE,'nguyenthiP','nguyenthiP144','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('122','Nguyễn','Thanh','M','male','2001-08-14','44 Võ Văn Kiệt','nguyenthanhM@yahoo.com','145145',TRUE,'nguyenthanhM','nguyenthanhM145','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('123','Nguyễn','Thanh','T','female','2001-08-13','55 Võ Văn Kiệt','nguyenthanhT@yahoo.com','146146',TRUE,'nguyenthanhT','nguyenthanhT146','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('124','Nguyễn','Thị','A','female','2001-07-12','66 Võ Văn Ngân','nguyenthiA@yahoo.com','147147',TRUE,'nguyenthiA','nguyenthiA147','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('125','Nguyễn','Sỹ','T','male','2001-07-11','77 Võ Văn Ngân','nguyensyT@yahoo.com','148148',TRUE,'nguyensyT','nguyensyT148','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('126','Văn','Công','N','male','2000-07-10','88 Mạc Đĩnh Chi','vancongN@yahoo.com','149149',TRUE,'vancongN','vancongN149','user');
+INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
+                    VALUES ('127','Vũ','Phụng','T','female','2003-05-09','74 Mạc Đĩnh Chi','vuphungT@yahoo.com','150150',TRUE,'vuphungT','vuphungT150','user');
