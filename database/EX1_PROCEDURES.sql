@@ -2,7 +2,7 @@ USE clinicSystemDB;
 
 DELIMITER //
 CREATE FUNCTION isValidEmail(email VARCHAR(100)) 
-  RETURNS BOOL
+  RETURNS BOOL reads sql data
   BEGIN
     DECLARE email_pattern VARCHAR(100);
       SET email_pattern = '^[A-Z|a-z|0-9|.|_|%|-]+@[A-Z|a-z|0-9|.|-]+\.[A-Z|a-z]{2,4}$';
@@ -11,7 +11,7 @@ CREATE FUNCTION isValidEmail(email VARCHAR(100))
 
 
   CREATE FUNCTION isValidPhoneNumber(phone_num VARCHAR(15))
-  RETURNS BOOL
+  RETURNS BOOL reads sql data
   BEGIN
     DECLARE phone_num_pattern VARCHAR(15);
       SET phone_num_pattern = '^[0-9]{10,11}$';
@@ -70,12 +70,8 @@ CREATE PROCEDURE insertUser(
       SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Username đã tồn tại!';
       END IF;
       
-      IF LENGTH(_password) < 8 THEN
-      SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Password ít nhất có 8 kí tự';
-      END IF;
-      
     INSERT INTO _user(fname, minit, lname, gender, birthdate, addr, email, phone_num, username, _password, type)
-    VALUES (fname, minit, lname, gender, STR_TO_DATE(birthdate, '%d-%m-%Y'), addr, email, phone_num, username, SHA2(_password, 256), type);
+    VALUES (fname, minit, lname, gender, STR_TO_DATE(birthdate, '%d-%m-%Y'), addr, email, phone_num, username, _password, type);
       
   END //
 

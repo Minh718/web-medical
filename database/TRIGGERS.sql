@@ -54,7 +54,7 @@ DELIMITER ;
 DELIMITER //
 
 CREATE TRIGGER before_cancel_patient_appointment
-BEFORE delete ON patient_appointment
+BEFORE DELETE ON patient_appointment
 FOR EACH ROW
 BEGIN
     DECLARE appointment_time TIME;
@@ -69,7 +69,7 @@ BEGIN
     SELECT _date, _time
     INTO appointment_date, appointment_time
     FROM appointment
-    WHERE appointment.id = NEW.app_id;
+    WHERE appointment.id = OLD.app_id;
 
     -- Check if the appointment date is in the past
     IF appointment_date < cur_date THEN
@@ -83,7 +83,7 @@ BEGIN
         SET MESSAGE_TEXT = 'Chỉ có thể hủy lịch hẹn trước giờ hẹn 30 phút';
     END IF;
     -- Update the current number of people
-    UPDATE appointment SET cur_people = cur_people - 1 WHERE id = NEW.app_id;
+    UPDATE appointment SET cur_people = cur_people - 1 WHERE id = OLD.app_id;
 END;
 //
 

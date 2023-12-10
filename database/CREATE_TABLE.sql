@@ -409,6 +409,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Mật khẩu phải chứa ít nhất một chữ cái và một số.';
     END IF;
+    SET NEW._password = SHA2(NEW._password, 256);
 END //
 
 DELIMITER ;
