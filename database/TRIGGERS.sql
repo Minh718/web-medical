@@ -28,7 +28,7 @@ BEGIN
     END IF;
 
     -- Check if the appointment time is less than 30 minutes from the current time
-    IF TIMEDIFF(appointment_time, cur_time) < '00:30:00' THEN
+    IF TIMEDIFF(appointment_time, cur_time) < '00:30:00' AND appointment_date = cur_date THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Không thể đặt lịch hẹn ít hơn 30 phút trước thời gian khám.';
     END IF;
@@ -78,7 +78,7 @@ BEGIN
     END IF;
 
     -- Check if the appointment time is less than 30 minutes from the current time
-    IF TIMEDIFF(appointment_time, cur_time) < '00:30:00' THEN
+    IF TIMEDIFF(appointment_time, cur_time) < '00:30:00' AND appointment_date = cur_date THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Chỉ có thể hủy lịch hẹn trước giờ hẹn 30 phút';
     END IF;

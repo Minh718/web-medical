@@ -1,7 +1,7 @@
 DELIMITER //
-
 CREATE PROCEDURE GetAppointmentStatus(
-    IN p_app_date DATE,
+    IN begin_date	DATE,
+    IN end_date 	DATE,
     IN clinic_id INT
 )
 BEGIN
@@ -11,17 +11,19 @@ BEGIN
         a._end_time AS time_end ,
         a.cur_people AS people_registed,
         a.max_people AS max_people,
+        a._date AS date,
         COUNT(CASE WHEN p._status = 'CONFIRM' THEN 1 END) AS count_confirm,
         COUNT(CASE WHEN p._status = 'UNCONFIRM' THEN 1 END) AS count_unconfirm
     FROM
         appointment a JOIN patient_appointment p ON a.id = p.app_id
     WHERE
-        a._date = p_app_date
+        a._date >= begin_date
+            AND a._date <= end_date
         AND a.clinic_id = clinic_id
     GROUP BY
         a.id
     ORDER BY
-        a._date;
+        a.cur_people DESC ;
 
 END //
 
@@ -29,8 +31,9 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE getPeopleVisitInTheMonth(
-    IN _month INT,
+CREATE PROCEDURE statisticsRegularPatients(
+    IN begin_date	DATE,
+    IN end_date 	DATE,
     IN clinic_id INT
 )
 BEGIN
@@ -43,6 +46,7 @@ BEGIN
         u.addr,
         u.email,
         u.phone_num,
+        p._date,
          COUNT(u.id) AS lankham
     FROM
         appointment a 
@@ -50,13 +54,14 @@ BEGIN
         JOIN patient p ON pa.patient_id = p.id
         JOIN _user u on u.id = p.id
     WHERE
-        MONTH(a._date) = _month
+        a._date >= begin_date
+            AND a._date <= end_date
         AND a.clinic_id = clinic_id AND
         pa._status = 'CONFIRM'
     GROUP BY
         p.id
     ORDER BY
-        COUNT(p.id) ASC;
+        COUNT(p.id) DESC;
 END //
 
 DELIMITER ;
