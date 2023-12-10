@@ -149,3 +149,55 @@ INSERT INTO `clinicsystemdb`.`examination` (`id`, `diagnose`, `_desc`, `doctor_i
 
 
 
+-- Room
+
+INSERT INTO `clinicsystemdb`.`room` (`num`, `clinic_id`, `_name`, `_status`, `doctor_id`) VALUES ('100', '1', 'Tầng 1', 'HOẠT ĐỘNG', '100');
+INSERT INTO `clinicsystemdb`.`room` (`num`, `clinic_id`, `_name`, `_status`, `doctor_id`) VALUES ('101', '1', 'Tầng 2', 'HOẠT ĐỘNG', '101');
+INSERT INTO `clinicsystemdb`.`room` (`num`, `clinic_id`, `_name`, `_status`, `doctor_id`) VALUES ('102', '1', 'Tầng 3', 'HOẠT ĐỘNG', '102');
+INSERT INTO `clinicsystemdb`.`room` (`num`, `clinic_id`, `_name`, `_status`, `doctor_id`) VALUES ('103', '1', 'Tầng 4', 'HOẠT ĐỘNG', '103');
+
+-- work_at
+
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('100', '100', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('105', '100', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('106', '100', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('101', '101', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('107', '101', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('108', '101', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('102', '102', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('109', '102', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('110', '102', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('103', '103', '1');
+INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES ('111', '103', '1');
+
+
+-- medician in clinic
+
+INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `quantity`) VALUES ('1', '1', '500');
+INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `quantity`) VALUES ('1', '2', '400');
+INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `quantity`) VALUES ('2', '1', '300');
+INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `quantity`) VALUES ('1', '3', '200');
+INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `quantity`) VALUES ('2', '4', '300');
+INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `quantity`) VALUES ('1', '5', '100');
+
+
+
+-- kê thuốc
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('1', '1', 'Thuốc bổ', '9');
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('1', '2', 'Thuốc nhứt nhứt cái đầu', '10');
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('2', '7', '', '3');
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('3', '6', '', '3');
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('2', '6', '', '3');
+
+
+
+
+--- work-with
+
+INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('105', '100');
+INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('106', '100');
+INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('107', '101');
+INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('108', '101');
+INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('109', '102');
+INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('110', '102');
+INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('111', '103');
