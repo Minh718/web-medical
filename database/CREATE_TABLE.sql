@@ -5,26 +5,30 @@ SET FOREIGN_KEY_CHECKS=0;
 
 CREATE TABLE IF NOT EXISTS clinic
 (
-	id					INT 				AUTO_INCREMENT,
-    _name				VARCHAR(50)			UNIQUE,
-    address				VARCHAR(255)			UNIQUE,
-    email    			VARCHAR(100)		NOT NULL,
-    _desc				VARCHAR(255),
+	id				INT 				AUTO_INCREMENT,
+    _name			VARCHAR(50)			UNIQUE,
+    address			VARCHAR(255)		UNIQUE,
+    email    		VARCHAR(100)		NOT NULL,
+    _desc			VARCHAR(255),
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS room
 (
-	num					INT,
-    clinic_id			INT,
-    _name				VARCHAR(50)			NOT NULL,
-	_desc				VARCHAR(200),
-    _status				VARCHAR(50)			NOT NULL,
-    doctor_id 			INT,
+	num				INT,
+    clinic_id		INT,
+    _name			VARCHAR(50)			NOT NULL,
+	_desc			VARCHAR(200),
+    _status			VARCHAR(50)			NOT NULL,
+    doctor_id 		INT,
     
     PRIMARY KEY (num, clinic_id),
     
     CONSTRAINT room_check_1 CHECK (_status = "KHÔNG HOẠT ĐỘNG" OR _status = "HOẠT ĐỘNG"),
+    
+    CONSTRAINT fk_room_clinic_id FOREIGN KEY (clinic_id)
+		REFERENCES clinic(id)
+        ON DELETE RESTRICT,
     
 	CONSTRAINT fk_room_doctor_id FOREIGN KEY (doctor_id)
 		REFERENCES doctor(id) 
@@ -33,42 +37,42 @@ CREATE TABLE IF NOT EXISTS room
 
 CREATE TABLE IF NOT EXISTS appointment
 (
-	id 					INT 				AUTO_INCREMENT,
-    _time				TIME				NOT NULL,
-    _end_time				TIME				NOT NULL,
-    _date				DATE				NOT NULL,
-	cur_people			INT					NOT NULL DEFAULT 0,
-    max_people			INT					NOT NULL,
-    _status	 			INT					NOT NULL,
-    clinic_id			INT,
+	id 				INT 		AUTO_INCREMENT,
+    _time			TIME		NOT NULL,
+    _end_time		TIME		NOT NULL,
+    _date			DATE		NOT NULL,
+	cur_people		INT			NOT NULL DEFAULT 0,
+    max_people		INT			NOT NULL DEFAULT 5,
+    is_full	 		BOOL		NOT NULL DEFAULT 0,
+    clinic_id		INT,
     
     PRIMARY KEY (id),
     
     CONSTRAINT appointment_check_1 
 		CHECK (cur_people >= 0),
 	CONSTRAINT appointment_check_2
-		CHECK (max_people >= 0),    
+		CHECK (max_people > 0),    
     
     CONSTRAINT fk_appointment_clinic_id FOREIGN KEY (clinic_id)
 		REFERENCES clinic(id)
-        ON DELETE SET NULL
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS _user
 (
-	id 					INT					AUTO_INCREMENT,
-    fname				VARCHAR(20)			NOT NULL,
-    minit				VARCHAR(20),
-    lname 				VARCHAR(20)			NOT NULL,
-    gender				VARCHAR(10)			NOT NULL,
-	birthdate			DATE				NOT NULL,
-    addr				VARCHAR(255),
-    email 				VARCHAR(50)			NOT NULL 	UNIQUE,
-    phone_num			VARCHAR(15)			NOT NULL,
-    is_active			BOOL				NOT NULL 	DEFAULT FALSE,
-    username			VARCHAR(50)			NOT NULL 	UNIQUE,
-    _password			VARCHAR(255) 		NOT NULL,
-    type          VARCHAR(20)			NOT NULL ,
+	id 				INT					AUTO_INCREMENT,
+    fname			VARCHAR(20)			NOT NULL,
+    minit			VARCHAR(20),
+    lname 			VARCHAR(20)			NOT NULL,
+    gender			VARCHAR(10)			NOT NULL,
+	birthdate		DATE				NOT NULL,
+    addr			VARCHAR(255),
+    email 			VARCHAR(50)			NOT NULL 	UNIQUE,
+    phone_num		VARCHAR(15)			NOT NULL,
+    is_active		BOOL				NOT NULL 	DEFAULT FALSE,
+    username		VARCHAR(50)			NOT NULL 	UNIQUE,
+    _password		VARCHAR(255) 		NOT NULL,
+    type          	VARCHAR(20)			NOT NULL ,
     
     CONSTRAINT user_check_1
 		CHECK (gender = "male" OR gender = "female" OR gender="other"),
@@ -76,79 +80,28 @@ CREATE TABLE IF NOT EXISTS _user
     PRIMARY KEY (id)
 );
 
--- CREATE TABLE IF NOT EXISTS patient
--- (
--- 	id 					INT					AUTO_INCREMENT,
---     fname				VARCHAR(20)			NOT NULL,
---     minit				VARCHAR(20),
---     lname 				VARCHAR(20)			NOT NULL,
---     gender				VARCHAR(10)			NOT NULL,
--- 	birthdate			DATE				NOT NULL,
---     addr				VARCHAR(255),
---     email 				VARCHAR(50)			NOT NULL 	UNIQUE,
---     phone_num			VARCHAR(15)			NOT NULL,
---     is_active			BOOL				NOT NULL 	DEFAULT TRUE,
---     username			VARCHAR(50)			NOT NULL 	UNIQUE,
---     _password			VARCHAR(255) 		NOT NULL,
-
---     CONSTRAINT user_check_1
--- 		CHECK (gender = "male" OR gender = "female" OR gender="other"),
---     PRIMARY KEY (id)
--- );
 CREATE TABLE IF NOT EXISTS patient
 (
-	id 					INT 				PRIMARY KEY,
+	id 				INT 				PRIMARY KEY,
     CONSTRAINT fk_patient_id FOREIGN KEY (id)
 		REFERENCES _user(id) 
 		ON DELETE CASCADE
 );
 
-
--- CREATE TABLE IF NOT EXISTS medical_staff
--- (
--- 	id 					INT					AUTO_INCREMENT,
---     fname				VARCHAR(20)			NOT NULL,
---     minit				VARCHAR(20),
---     lname 				VARCHAR(20)			NOT NULL,
---     gender				VARCHAR(10)			NOT NULL,
--- 	birthdate			DATE				NOT NULL,
---     addr				VARCHAR(255),
---     email 				VARCHAR(50)			NOT NULL 	UNIQUE,
---     phone_num			VARCHAR(15)			NOT NULL,
---     is_active			BOOL				NOT NULL 	DEFAULT TRUE,
---     username			VARCHAR(50)			NOT NULL 	UNIQUE,
---     _password			VARCHAR(255) 		NOT NULL,
---     start_date 			DATE				DEFAULT NOW(),
---     YOE 				INT					NOT NULL,
---     license_number 		VARCHAR(50)			NOT NULL,
---     salary 				INT					NOT NULL,
---     role            VARCHAR(20) NOT NULL,        
-    
---     CONSTRAINT user_check_1
--- 		CHECK (gender = "male" OR gender = "female" OR gender="other"),
---     PRIMARY KEY (id)
-    
--- 		CHECK (role = "doctor" OR role = "nurse"),
---     CONSTRAINT medical_staff_check_1 
--- 		CHECK (YOE >= 0),
-        
--- 	CONSTRAINT medical_staff_check_2
--- 		CHECK (salary >= 0),
--- );
 CREATE TABLE IF NOT EXISTS medical_staff
 (
-	id 					INT 				PRIMARY KEY,
-    start_date 			DATE				DEFAULT (CURDATE()),
-    YOE 				INT					NOT NULL,
-    license_number 		VARCHAR(50)			NOT NULL,
-    salary 				INT					NOT NULL,
-    role            VARCHAR(20) NOT NULL,    
+	id 				INT 				PRIMARY KEY,
+    start_date 		DATE				DEFAULT (CURDATE()),
+    YOE 			INT					NOT NULL,
+    license_number 	VARCHAR(50)			NOT NULL,
+    salary 			INT					NOT NULL,
+    role            VARCHAR(20) 		NOT NULL,   
     CONSTRAINT medical_staff_check_1 
 		CHECK (YOE >= 0),
         
 	CHECK (role = "doctor" OR role = "nurse"),
 	CONSTRAINT medical_staff_check_2
-		CHECK (salary >= 0),
+		CHECK (salary > 0),
     CONSTRAINT fk_medical_staff_id 			FOREIGN KEY (id)
 		REFERENCES _user(id) 
 		ON DELETE CASCADE
@@ -156,8 +109,8 @@ CREATE TABLE IF NOT EXISTS medical_staff
 
 CREATE TABLE IF NOT EXISTS doctor
 (
-	id 					INT 				PRIMARY KEY,
-    specialty			VARCHAR(50)			NOT NULL,
+	id 				INT 				PRIMARY KEY,
+    specialty		VARCHAR(50)			NOT NULL,
     
     CONSTRAINT fk_doctor_id FOREIGN KEY (id)
 		REFERENCES medical_staff(id) 
@@ -166,9 +119,8 @@ CREATE TABLE IF NOT EXISTS doctor
 
 CREATE TABLE IF NOT EXISTS  nurse
 (
-	id 					INT 				PRIMARY KEY,
-  
-    
+	id 				INT 				PRIMARY KEY,
+
     CONSTRAINT fk_nurse_id FOREIGN KEY (id)
 		REFERENCES medical_staff(id) 
         ON DELETE CASCADE
@@ -176,16 +128,16 @@ CREATE TABLE IF NOT EXISTS  nurse
 
 CREATE TABLE IF NOT EXISTS examination
 (
-	id 					INT 				AUTO_INCREMENT,
-    diagnose 			VARCHAR(100)		NOT NULL,
-    _desc 				VARCHAR(50),
-    image 				VARCHAR(100),
-    total_price			INT					NOT NULL DEFAULT 0,
-    doctor_id			INT,
-    patient_id 			INT,
-    app_id 				INT,
-    bill_id				INT,
-    service_id			INT,
+	id 				INT 				AUTO_INCREMENT,
+    diagnose 		VARCHAR(100)		NOT NULL,
+    _desc 			VARCHAR(50),
+    image 			VARCHAR(100),
+    total_price		INT					NOT NULL DEFAULT 0,
+    doctor_id		INT,
+    patient_id 		INT,
+    app_id 			INT,
+    bill_id			INT,
+    service_id		INT,
     
     PRIMARY KEY (id),
     
@@ -208,33 +160,31 @@ CREATE TABLE IF NOT EXISTS examination
 
 CREATE TABLE IF NOT EXISTS bill
 (
-	id 					INT					AUTO_INCREMENT,
-    total_cost			INT					NOT NULL DEFAULT 0,
-    _status 			BOOL				NOT NULL DEFAULT FALSE, /* 0: Not pay yet, 1: Paid */
-    _timestamp 			DATE 			NOT NULL DEFAULT (CURDATE()),
-    due_date 			DATE 			NOT NULL DEFAULT (CURDATE()),
+	id 				INT				AUTO_INCREMENT,
+    total_cost		INT				NOT NULL DEFAULT 0,
+    is_paid 		BOOL			NOT NULL DEFAULT FALSE,
+    _timestamp 		DATE 			NOT NULL DEFAULT CURRENT_TIMESTAMP,
     
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS medicine
 (
-	serial_num 			VARCHAR(50) 		PRIMARY KEY,
-    _name 				VARCHAR(50)			NOT NULL,
-    cost 				INT					NOT NULL,
-    _desc 				VARCHAR(50),
+	serial_num 		VARCHAR(50) 		PRIMARY KEY,
+    _name 			VARCHAR(50)			NOT NULL,
+    cost 			INT					NOT NULL,
+    _desc 			VARCHAR(50),
     
     CONSTRAINT medicine_check_1	
 		CHECK (cost > 0)
-		
 );
 
 CREATE TABLE IF NOT EXISTS service
 (
-	id					INT					PRIMARY KEY,
-    _name 				VARCHAR(50)			NOT NULL,
-    cost 				INT					NOT NULL,
-    _desc 				VARCHAR(50),
+	id				INT					PRIMARY KEY,
+    _name 			VARCHAR(50)			NOT NULL,
+    cost 			INT					NOT NULL,
+    _desc 			VARCHAR(50),
     
     CONSTRAINT service_check_1
 		CHECK (cost > 0)
@@ -242,29 +192,29 @@ CREATE TABLE IF NOT EXISTS service
 
 CREATE TABLE IF NOT EXISTS work_at
 (
-	ms_id 				INT					PRIMARY KEY,
-    room_num 			INT,
-    clinic_id 			INT,
+	ms_id 			INT					PRIMARY KEY,
+    room_num 		INT,
+    clinic_id 		INT,
     
-    CONSTRAINT fk_work_at_ms_id					FOREIGN KEY (ms_id)
+    CONSTRAINT fk_work_at_ms_id		FOREIGN KEY (ms_id)
 		REFERENCES medical_staff(id)				
         ON DELETE CASCADE,
     
-    CONSTRAINT fk_work_at_room_num_clinic_id	FOREIGN KEY (room_num, clinic_id)
+    CONSTRAINT fk_work_at_room_num_clinic_id 	FOREIGN KEY (room_num, clinic_id)
 		REFERENCES room(num, clinic_id)				
         ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS work_with
 (
-	nurse_id 			INT						PRIMARY KEY,
+	nurse_id 			INT				PRIMARY KEY,
     doctor_id 			INT,
     
-    CONSTRAINT fk_work_with_nurse_id 			FOREIGN KEY (nurse_id)
+    CONSTRAINT fk_work_with_nurse_id 	FOREIGN KEY (nurse_id)
 		REFERENCES nurse(id)						
         ON DELETE CASCADE,
         
-    CONSTRAINT fk_work_with_doctoc_id 			FOREIGN KEY (doctor_id)
+    CONSTRAINT fk_work_with_doctoc_id 	FOREIGN KEY (doctor_id)
 		REFERENCES doctor(id)						
         ON DELETE CASCADE
 );
@@ -273,12 +223,12 @@ CREATE TABLE IF NOT EXISTS patient_appointment
 (
 	patient_id 			INT,
     app_id 				INT,
-    _status 			VARCHAR(50) DEFAULT "UNCONFIRM",
+    _status 			VARCHAR(50) DEFAULT "unconfirm",
     
     PRIMARY KEY (patient_id, app_id),
     
     CONSTRAINT app_of_patient_check_1
-		CHECK (_status ="UNCONFIRM" OR _status ="CONFIRM"),
+		CHECK (_status ="unconfirm" OR _status ="confirm" or _status="done"),
     
     CONSTRAINT fk_patient_appointment_patient_id 	FOREIGN KEY (patient_id)
 		REFERENCES patient(id) 						
@@ -321,13 +271,13 @@ CREATE TABLE IF NOT EXISTS prescription
 	PRIMARY KEY (exam_id, serial_num),
     
     CONSTRAINT prescription_check_1
-		CHECK (quantity >= 0),
+		CHECK (quantity > 0),
     
-    CONSTRAINT fk_prescription_exam_id			FOREIGN KEY (exam_id)
+    CONSTRAINT fk_prescription_exam_id		FOREIGN KEY (exam_id)
 		REFERENCES examination(id)					
         ON DELETE CASCADE,
     
-    CONSTRAINT fk_prescription_serial_num 		FOREIGN KEY (serial_num)
+    CONSTRAINT fk_prescription_serial_num 	FOREIGN KEY (serial_num)
 		REFERENCES medicine(serial_num)				
         ON DELETE CASCADE,
     
@@ -340,7 +290,7 @@ CREATE TABLE IF NOT EXISTS clinic_hotline(
     
     PRIMARY KEY (clinic_id, hotline),
     
-    CONSTRAINT fk_clinic_hotline_clinic_id 		FOREIGN KEY (clinic_id)
+    CONSTRAINT fk_clinic_hotline_clinic_id 	FOREIGN KEY (clinic_id)
 		REFERENCES clinic(id) 						
         ON DELETE CASCADE
 );
@@ -356,7 +306,7 @@ CREATE TABLE IF NOT EXISTS clinic_worktime
     
     CONSTRAINT clinic_worktime_check_1 CHECK (open_time < close_time),
     
-    CONSTRAINT fk_clinic_worktime_clinic_id 		FOREIGN KEY (clinic_id)
+    CONSTRAINT fk_clinic_worktime_clinic_id 	FOREIGN KEY (clinic_id)
 		REFERENCES clinic(id) 					
         ON DELETE CASCADE
 );
@@ -374,132 +324,72 @@ CREATE TABLE IF NOT EXISTS examination_allergy(
 
 SET FOREIGN_KEY_CHECKS=1;
 
-DELIMITER //
-
-CREATE TRIGGER check_password
-BEFORE INSERT ON _user
-FOR EACH ROW
-BEGIN
-    DECLARE password_length INT;
-    DECLARE contains_digit BOOLEAN;
-    DECLARE contains_letter BOOLEAN;
-
-    -- Kiểm tra mật khẩu có đủ 8 ký tự không
-    SET password_length = CHAR_LENGTH(NEW._password);
-    IF password_length < 8 THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Mật khẩu phải chứa ít nhất 8 ký tự.';
-    END IF;
-
-    -- Kiểm tra mật khẩu có chứa chữ và số không
-    SET contains_digit = FALSE;
-    SET contains_letter = FALSE;
-
-    WHILE password_length > 0 DO
-        IF SUBSTRING(NEW._password, password_length, 1) REGEXP '[0-9]' THEN
-            SET contains_digit = TRUE;
-        ELSE
-            SET contains_letter = TRUE;
-        END IF;
-
-        SET password_length = password_length - 1;
-    END WHILE;
-
-    IF NOT contains_digit OR NOT contains_letter THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Mật khẩu phải chứa ít nhất một chữ cái và một số.';
-    END IF;
-    SET NEW._password = SHA2(NEW._password, 256);
-END //
-
-DELIMITER ;
 
 DELIMITER //
-
-CREATE TRIGGER check_insert_doctor
+CREATE TRIGGER insertDoctor
 BEFORE INSERT ON medical_staff
 FOR EACH ROW
 BEGIN
-	IF new.role = 'doctor' AND new.YOE < 3 THEN
-            SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Số năm kinh nghiệm tối thiếu của bác sĩ là 3';
+	IF NEW.role = 'doctor' AND NEW.YOE < 3 THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Số năm kinh nghiệm tối thiếu của bác sĩ là 3';
     END IF;
-
 END //
-
 DELIMITER ;
 
 
 DELIMITER //
-
-CREATE TRIGGER check_appoint_patient
+CREATE TRIGGER registerAppointment 
 BEFORE INSERT ON patient_appointment
 FOR EACH ROW
 BEGIN
-	declare timesUncomfirm INT;
-	select count(*) INTO timesUncomfirm 
-    from patient_appointment
-    where patient_id = new.patient_id AND _status = 'UNCONFIRM';
-    if timesUncomfirm >= 5 THEN
-            SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Không thể đăng ký cuộc hẹn vì đã lỡ hẹn quá nhiều';
+	DECLARE timesUncomfirm INT;
+    DECLARE cur_time TIME;
+    DECLARE cur_date DATE;
+
+    SET cur_time = CURRENT_TIME();
+    SET cur_date = CURDATE();
+    
+    SELECT *
+    FROM appointment AS A
+    WHERE (A._date < cur_date) OR (A._date = cur_date AND A._time <= cur_time);
+    
+    SELECT COUNT(*) INTO timesUncomfirm 
+    FROM 	(SELECT * 
+			FROM patient_appointment AS PA
+			WHERE PA.patient_id = NEW.patient_id 
+            AND PA._status = 'unconfirm') AS PA, 
+												(SELECT *
+												FROM appointment AS A
+												WHERE (A._date < cur_date) OR (A._date = cur_date AND A._time <= cur_time)) 
+												AS A
+    WHERE PA.app_id = A.id;
+    
+    IF timesUncomfirm >= 5 THEN
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT = 'Không thể đăng ký cuộc hẹn vì đã lỡ hẹn quá 5 lần trong một năm';
     END IF;
-END //
-
-DELIMITER ;
-
-
-
-
-
-DELIMITER //
-
-CREATE TRIGGER check_payment_deadline
-BEFORE INSERT ON bill
-FOR EACH ROW
-BEGIN
-    DECLARE due_date DATE;
-
-    -- Lấy ngày hiện tại
-    SET NEW._timestamp = CURDATE();
-
-    -- Tính toán ngày thanh toán cuối cùng (5 ngày kể từ ngày tạo)
-    SET due_date = DATE_ADD(NEW._timestamp, INTERVAL 5 DAY);
-END //
-
 DELIMITER ;
 
 
 DELIMITER //
-
-CREATE TRIGGER due_date_bill
-BEFORE INSERT ON bill
-FOR EACH ROW
-BEGIN
-    -- Tính toán ngày thanh toán cuối cùng (5 ngày kể từ ngày tạo)
-    SET new.due_date = DATE_ADD(NEW._timestamp, INTERVAL 5 DAY);
-END //
-
-DELIMITER ;
-
-
-DELIMITER //
-
-CREATE TRIGGER check_salary
+CREATE TRIGGER checkSalary
 BEFORE INSERT ON medical_staff
 FOR EACH ROW
 BEGIN
-    -- Kiểm tra nếu là bác sĩ và có y tá có lương cao hơn
-	IF NEW.role = 'doctor' AND EXISTS(SELECT * FROM medical_staff WHERE role = 'nurse' AND salary > NEW.salary) THEN
+	DECLARE min_salary_doctor INT;
+    DECLARE max_salary_nurse INT;
+    
+	SELECT MIN(MS.salary) AS min_salary_doctor
+    FROM doctor AS D, medical_staff AS MS
+    WHERE D.id = MS.id;
+    
+    SELECT MAX(MS.salary) AS max_salary_nurse
+    FROM nurse AS N, medical_staff AS MS
+    WHERE N.id = MS.id;
+    
+    IF min_salary_doctor <= max_salary_nurse THEN
 		SIGNAL SQLSTATE '45000'
-		SET MESSAGE_TEXT = 'Lương của bác sĩ không thể thấp hơn lương của y tá.';
-    END IF;
-
-    -- Kiểm tra nếu là y tá và có bác sĩ có lương thấp hơn
-	IF NEW.role = 'nurse' AND EXISTS(SELECT * FROM medical_staff WHERE role = 'doctor' AND salary < NEW.salary) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Lương của y tá phải thấp hơn lương của bác sĩ.';
+		SET MESSAGE_TEXT = 'Lương của bác sĩ không thể thấp hơn hoặc bằng lương của y tá.';
     END IF;
 END //
-
 DELIMITER ;
