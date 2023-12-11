@@ -1,3 +1,9 @@
+--  Add dữ liệu mẫu vào bảng CLINIC
+INSERT INTO `clinic`(`id`, `_name`, `address`, `email`, `_desc`) VALUES ('001','Phòng khám Bách Khoa CS1','1 Bis, Hùng Vương','CL001@yahoo.com','Tổng quát');
+INSERT INTO `clinic`(`id`, `_name`, `address`, `email`, `_desc`) VALUES ('002','Phòng khám Bách Khoa CS2','2 Bis, Trưng Trắc','CL002@yahoo.com','Ngoại tổng quát');
+INSERT INTO `clinic`(`id`, `_name`, `address`, `email`, `_desc`) VALUES ('003','Phòng khám Bách Khoa CS3','3 Bis, Đinh Bộ Lĩnh','CL003@yahoo.com','Khám nội tổng quát');
+INSERT INTO `clinic`(`id`, `_name`, `address`, `email`, `_desc`) VALUES ('004','Phòng khám Bách Khoa CS4','4 Bis, Lý Thường Kiệt','CL004@yahoo.com','Tim mạch');
+
 -- Add dữ liệu mẫu vào bảng CLINIC_HOTLINE
 INSERT INTO `clinic_hotline`(`clinic_id`, `hotline`) VALUES ('001','1111');
 INSERT INTO `clinic_hotline`(`clinic_id`, `hotline`) VALUES ('002','2222');
