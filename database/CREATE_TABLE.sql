@@ -248,9 +248,6 @@ CREATE TABLE IF NOT EXISTS medicine_in_clinic
     
     CONSTRAINT medicine_in_clinic_check_1
 		CHECK (quantity >= 0),
-        
-	CONSTRAINT medicine_in_clinic_check_2
-		CHECK (quantity > 0),
     
     CONSTRAINT fk_medicine_in_clinic_clinic_id 		FOREIGN KEY (clinic_id)
 		REFERENCES clinic(id) 							
@@ -279,9 +276,7 @@ CREATE TABLE IF NOT EXISTS prescription
     
     CONSTRAINT fk_prescription_serial_num 	FOREIGN KEY (serial_num)
 		REFERENCES medicine(serial_num)				
-        ON DELETE CASCADE,
-    
-    CHECK (quantity > 0)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS clinic_hotline(
@@ -304,7 +299,8 @@ CREATE TABLE IF NOT EXISTS clinic_worktime
     
     PRIMARY KEY (clinic_id, weekdays, open_time, close_time),
     
-    CONSTRAINT clinic_worktime_check_1 CHECK (open_time < close_time),
+    CONSTRAINT clinic_worktime_check_1 
+		CHECK (open_time < close_time),
     
     CONSTRAINT fk_clinic_worktime_clinic_id 	FOREIGN KEY (clinic_id)
 		REFERENCES clinic(id) 					
@@ -349,13 +345,9 @@ BEGIN
     SET cur_time = CURRENT_TIME();
     SET cur_date = CURDATE();
     
-    SELECT *
-    FROM appointment AS A
-    WHERE (A._date < cur_date) OR (A._date = cur_date AND A._time <= cur_time);
-    
     SELECT COUNT(*) INTO timesUncomfirm 
     FROM 	(SELECT * 
-			FROM patient_appointment AS PA
+			FROM patient_appointment AS PA	
 			WHERE PA.patient_id = NEW.patient_id 
             AND PA._status = 'unconfirm') AS PA, 
 												(SELECT *
@@ -366,7 +358,7 @@ BEGIN
     
     IF timesUncomfirm >= 5 THEN
 		SIGNAL SQLSTATE '45000'
-		SET MESSAGE_TEXT = 'Không thể đăng ký cuộc hẹn vì đã lỡ hẹn quá 5 lần trong một năm';
+		SET MESSAGE_TEXT = 'Không thể đăng ký cuộc hẹn vì đã lỡ hẹn quá 5 lần';
     END IF;
 END //
 DELIMITER ;
@@ -380,11 +372,11 @@ BEGIN
 	DECLARE min_salary_doctor INT;
     DECLARE max_salary_nurse INT;
     
-	SELECT MIN(MS.salary) AS min_salary_doctor
+	SELECT MIN(MS.salary) INTO min_salary_doctor
     FROM doctor AS D, medical_staff AS MS
     WHERE D.id = MS.id;
     
-    SELECT MAX(MS.salary) AS max_salary_nurse
+    SELECT MAX(MS.salary) INTO max_salary_nurse
     FROM nurse AS N, medical_staff AS MS
     WHERE N.id = MS.id;
     

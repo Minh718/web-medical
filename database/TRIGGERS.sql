@@ -168,11 +168,9 @@ AFTER INSERT ON prescription
 FOR EACH ROW
 BEGIN
 	DECLARE total_cost INT;
-	SELECT SUM(M.cost * P.quantity) INTO total_cost
-    FROM medicine AS M,	(SELECT P.exam_id
-						FROM prescription AS P
-						WHERE NEW.id = P.exam_id) AS P
-    WHERE M.serial_num = P.serial_num;
+	SELECT SUM(M.cost * NEW.quantity) INTO total_cost
+    FROM medicine AS M
+    WHERE M.serial_num = NEW.serial_num;
     
     UPDATE examination AS E
     SET E.total_price = E.total_price + total_cost
@@ -185,6 +183,7 @@ CREATE PROCEDURE insertBill(
 )
 BEGIN
     DECLARE total_cost INT;
+    DECLARE bill_id INT;
 	IF NOT EXISTS(SELECT * FROM examination AS E WHERE E.patient_id = patient_id) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Bệnh nhân không có nợ';
 	END IF;
