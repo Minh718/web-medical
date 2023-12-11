@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS examination
     app_id 			INT,
     bill_id			INT,
     service_id		INT,
+    _timestamp		TIMESTAMP			NOT NULL DEFAULT CURRENT_TIMESTAMP,
     
     PRIMARY KEY (id),
     
