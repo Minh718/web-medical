@@ -24,7 +24,6 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Lịch hẹn đã quá hạn';
     END IF;
-<<<<<<< HEAD
     
     IF appointment_date = cur_date THEN
 		IF appointment_time < cur_time THEN
@@ -38,8 +37,6 @@ BEGIN
 			SET MESSAGE_TEXT = 'Không thể đặt lịch hẹn ít hơn 30 phút trước thời gian khám.';
 		END IF;
 	END IF;
-    
-=======
 
     -- Check if the appointment time is less than 30 minutes from the current time
     IF TIMEDIFF(appointment_time, cur_time) < '00:30:00' AND appointment_date = cur_date THEN
@@ -47,7 +44,6 @@ BEGIN
         SET MESSAGE_TEXT = 'Không thể đặt lịch hẹn ít hơn 30 phút trước thời gian khám.';
     END IF;
 
->>>>>>> 3cc4cd92a68c6bf0cc4f7c7bb2551317ee2f5db6
     -- Check if the maximum number of people for the appointment is reached
     IF cur_people >= max_people THEN
         SIGNAL SQLSTATE '45000'
@@ -105,14 +101,12 @@ BEGIN
 		END IF;
 	END IF;
 
-<<<<<<< HEAD
-=======
     -- Check if the appointment time is less than 30 minutes from the current time
     IF TIMEDIFF(appointment_time, cur_time) < '00:30:00' AND appointment_date = cur_date THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Chỉ có thể hủy lịch hẹn trước giờ hẹn 30 phút';
     END IF;
->>>>>>> 3cc4cd92a68c6bf0cc4f7c7bb2551317ee2f5db6
+    
     -- Update the current number of people
     UPDATE appointment 
     SET cur_people = cur_people - 1 

@@ -131,8 +131,8 @@ BEGIN
 		_user.gender = gender, _user.birthdate = birthdate, 
         _user.addr = addr, _user.email = email, _user.phone_num = phone_num
 	WHERE _user.id = id;
-
 END //
+
 CREATE PROCEDURE updatePasswordById(
 	IN id			INT,
 	IN _password	VARCHAR(255),
@@ -194,7 +194,6 @@ BEGIN
     
 	DELETE FROM _user WHERE _user.id = id;	
 END //
-
 DELIMITER ;
 
 

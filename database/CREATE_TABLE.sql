@@ -19,12 +19,10 @@ CREATE TABLE IF NOT EXISTS room
     clinic_id		INT,
     _name			VARCHAR(50)			NOT NULL,
 	_desc			VARCHAR(200),
-    _status			VARCHAR(50)			NOT NULL,
+    is_active		BOOL				NOT NULL DEFAULT 0,
     doctor_id 		INT,
     
     PRIMARY KEY (num, clinic_id),
-    
-    CONSTRAINT room_check_1 CHECK (_status = "KHÔNG HOẠT ĐỘNG" OR _status = "HOẠT ĐỘNG"),
     
     CONSTRAINT fk_room_clinic_id FOREIGN KEY (clinic_id)
 		REFERENCES clinic(id)
@@ -66,13 +64,13 @@ CREATE TABLE IF NOT EXISTS _user
     lname 			VARCHAR(20)			NOT NULL,
     gender			VARCHAR(10)			NOT NULL,
 	birthdate		DATE				NOT NULL,
-    addr			VARCHAR(255),
+    addr			VARCHAR(255)		NOT NULL,
     email 			VARCHAR(50)			NOT NULL 	UNIQUE,
     phone_num		VARCHAR(15)			NOT NULL,
     is_active		BOOL				NOT NULL 	DEFAULT FALSE,
     username		VARCHAR(50)			NOT NULL 	UNIQUE,
     _password		VARCHAR(255) 		NOT NULL,
-    type          	VARCHAR(20)			NOT NULL ,
+    type          	VARCHAR(20)			NOT NULL,
     
     CONSTRAINT user_check_1
 		CHECK (gender = "male" OR gender = "female" OR gender="other"),
