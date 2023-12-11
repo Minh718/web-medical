@@ -124,6 +124,8 @@ BEGIN
     DECLARE total_price INT;
     DECLARE temp INT;
     
+    SET total_price = 0;
+    
     -- Checking
 	IF NOT EXISTS (SELECT * FROM service WHERE NEW.service_id = service.id) THEN
         SIGNAL SQLSTATE '45000'
@@ -146,19 +148,22 @@ BEGIN
     END IF;
     -- End checking
     
-    
     SELECT SUM(S.cost) INTO temp
     FROM service AS S
     WHERE NEW.service_id = S.id;
-    SET total_price = temp;
+    IF NOT temp IS NULL THEN
+		SET total_price = total_price + temp;
+    END IF;
     
     SELECT SUM(M.cost * P.quantity) INTO temp
-    FROM medicine AS M,	(SELECT P.exam_id
+    FROM medicine AS M,	(SELECT *
 						FROM prescription AS P
 						WHERE NEW.id = P.exam_id) AS P
     WHERE M.serial_num = P.serial_num;
+    IF NOT temp IS NULL THEN
+		SET total_price = total_price + temp;
+    END IF;
     
-	SET total_price = total_price + temp;
     SET NEW.total_price = total_price;
 END;
 //
@@ -177,6 +182,7 @@ BEGIN
     WHERE NEW.exam_id = E.id;
 END;
 //
+
 
 CREATE PROCEDURE insertBill(
 	IN patient_id 	VARCHAR(255)

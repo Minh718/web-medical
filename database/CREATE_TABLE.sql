@@ -67,15 +67,13 @@ CREATE TABLE IF NOT EXISTS _user
     addr			VARCHAR(255)		NOT NULL,
     email 			VARCHAR(50)			NOT NULL 	UNIQUE,
     phone_num		VARCHAR(15)			NOT NULL,
-    is_active		BOOL				NOT NULL 	DEFAULT FALSE,
+    is_active		BOOL				NOT NULL 	DEFAULT TRUE,
     username		VARCHAR(50)			NOT NULL 	UNIQUE,
     _password		VARCHAR(255) 		NOT NULL,
     is_admin		BOOL   				NOT NULL DEFAULT FALSE,
-    type          	VARCHAR(20)			NOT NULL,
     
     CONSTRAINT user_check_1
 		CHECK (gender = "male" OR gender = "female" OR gender="other"),
-    CHECK (type = "user" OR type = "staff"),
     PRIMARY KEY (id)
 );
 
@@ -93,12 +91,11 @@ CREATE TABLE IF NOT EXISTS medical_staff
     start_date 		DATE				DEFAULT (CURDATE()),
     YOE 			INT					NOT NULL,
     license_number 	VARCHAR(50)			NOT NULL,
-    salary 			INT					NOT NULL,
-    role            VARCHAR(20) 		NOT NULL,   
+    salary 			INT					NOT NULL DEFAULT 0,
+
     CONSTRAINT medical_staff_check_1 
 		CHECK (YOE >= 0),
         
-	CHECK (role = "doctor" OR role = "nurse"),
 	CONSTRAINT medical_staff_check_2
 		CHECK (salary > 0),
     CONSTRAINT fk_medical_staff_id 			FOREIGN KEY (id)
@@ -135,7 +132,7 @@ CREATE TABLE IF NOT EXISTS examination
     doctor_id		INT,
     patient_id 		INT,
     app_id 			INT,
-    bill_id			INT,
+    bill_id			INT					DEFAULT NULL,
     service_id		INT,
     _timestamp		TIMESTAMP			NOT NULL DEFAULT CURRENT_TIMESTAMP,
     
@@ -323,18 +320,6 @@ SET FOREIGN_KEY_CHECKS=1;
 
 
 DELIMITER //
-CREATE TRIGGER insertDoctor
-BEFORE INSERT ON medical_staff
-FOR EACH ROW
-BEGIN
-	IF NEW.role = 'doctor' AND NEW.YOE < 3 THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Số năm kinh nghiệm tối thiếu của bác sĩ là 3';
-    END IF;
-END //
-DELIMITER ;
-
-
-DELIMITER //
 CREATE TRIGGER registerAppointment 
 BEFORE INSERT ON patient_appointment
 FOR EACH ROW
@@ -360,30 +345,6 @@ BEGIN
     IF timesUncomfirm >= 5 THEN
 		SIGNAL SQLSTATE '45000'
 		SET MESSAGE_TEXT = 'Không thể đăng ký cuộc hẹn vì đã lỡ hẹn quá 5 lần';
-    END IF;
-END //
-DELIMITER ;
-
-
-DELIMITER //
-CREATE TRIGGER checkSalary
-BEFORE INSERT ON medical_staff
-FOR EACH ROW
-BEGIN
-	DECLARE min_salary_doctor INT;
-    DECLARE max_salary_nurse INT;
-    
-	SELECT MIN(MS.salary) INTO min_salary_doctor
-    FROM doctor AS D, medical_staff AS MS
-    WHERE D.id = MS.id;
-    
-    SELECT MAX(MS.salary) INTO max_salary_nurse
-    FROM nurse AS N, medical_staff AS MS
-    WHERE N.id = MS.id;
-    
-    IF min_salary_doctor <= max_salary_nurse THEN
-		SIGNAL SQLSTATE '45000'
-		SET MESSAGE_TEXT = 'Lương của bác sĩ không thể thấp hơn hoặc bằng lương của y tá.';
     END IF;
 END //
 DELIMITER ;

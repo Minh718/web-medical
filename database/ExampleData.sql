@@ -1,24 +1,20 @@
---  Add dữ liệu mẫu vào bảng CLINIC
-INSERT INTO `clinic`(`id`, `_name`, `address`, `email`, `_desc`) VALUES ('001','Phòng khám Bách Khoa CS1','1 Bis, Hùng Vương','CL001@yahoo.com','Tổng quát');
-INSERT INTO `clinic`(`id`, `_name`, `address`, `email`, `_desc`) VALUES ('002','Phòng khám Bách Khoa CS2','2 Bis, Trưng Trắc','CL002@yahoo.com','Ngoại tổng quát');
-INSERT INTO `clinic`(`id`, `_name`, `address`, `email`, `_desc`) VALUES ('003','Phòng khám Bách Khoa CS3','3 Bis, Đinh Bộ Lĩnh','CL003@yahoo.com','Khám nội tổng quát');
-INSERT INTO `clinic`(`id`, `_name`, `address`, `email`, `_desc`) VALUES ('004','Phòng khám Bách Khoa CS4','4 Bis, Lý Thường Kiệt','CL004@yahoo.com','Tim mạch');
 -- Add dữ liệu mẫu vào bảng CLINIC_HOTLINE
 INSERT INTO `clinic_hotline`(`clinic_id`, `hotline`) VALUES ('001','1111');
 INSERT INTO `clinic_hotline`(`clinic_id`, `hotline`) VALUES ('002','2222');
 INSERT INTO `clinic_hotline`(`clinic_id`, `hotline`) VALUES ('003','3333');
 INSERT INTO `clinic_hotline`(`clinic_id`, `hotline`) VALUES ('004','4444');
-
 -- Add dữ liệu mẫu vào bảng CLINIC_WORKTIME
 INSERT INTO `clinic_worktime`(`clinic_id`, `weekdays`, `open_time`, `close_time`) VALUES ('001','Cả tuần','08:00:00','17:00:00');
 INSERT INTO `clinic_worktime`(`clinic_id`, `weekdays`, `open_time`, `close_time`) VALUES ('002','Thứ 2, Thứ 4','08:00:00','17:00:00');
 INSERT INTO `clinic_worktime`(`clinic_id`, `weekdays`, `open_time`, `close_time`) VALUES ('003','Thứ 3, Thứ 5','08:00:00','17:00:00');
 INSERT INTO `clinic_worktime`(`clinic_id`, `weekdays`, `open_time`, `close_time`) VALUES ('004','Cả tuần','08:00:00','17:00:00');
 
+
 -- Add dữ liệu vào bảng USER
 -- -- -TYPE = STAFF:
+
 INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
-                    VALUES ('100','Nguyễn','Văn','A','male','1988-12-01','8 Võ Văn Ngân','nguyenvanA@yahoo.com','123123',TRUE,'nguyenvanA','nguyenvanA123','staff');
+                    VALUES ('100','Nguyễn','Văn','An','male','1988-12-01','8 Võ Văn Ngân','nguyenvanA@yahoo.com','123123',TRUE,'nguyenvanA','nguyenvanA123','staff');
 INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
                     VALUES ('101','Nguyễn','Văn','B','male','1988-10-02','9 Nguyễn Văn Nguyễn','nguyenvanB@yahoo.com','124124',TRUE,'nguyenvanB','nguyenvanB124','staff');
 INSERT INTO `_user`(`id`, `fname`, `minit`, `lname`, `gender`, `birthdate`, `addr`, `email`, `phone_num`, `is_active`, `username`, `_password`, `type`) 
@@ -56,17 +52,18 @@ INSERT INTO `patient`(`id`) VALUES ('119');
 INSERT INTO `patient`(`id`) VALUES ('120');
 
 --  Add dữ liệu vào bảng MEDICAL_STAFF
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('100','2018-12-20','6','100000','12000000','doctor');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('101','2018-12-20','5','101000','10000000','doctor');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('102','2018-11-20','5','102000','10000000','doctor');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('103','2018-10-21','4','103000','12000000','doctor');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('105','2018-08-24','5','105000','5000000','nurse');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('106','2018-08-13','2','106000','2000000','nurse');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('107','2018-09-25','5','107000','9000000','nurse');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('108','2017-09-26','7','108000','1000000','nurse');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('109','2018-08-27','5','109000','1000000','nurse');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('110','2018-07-28','6','110000','1000000','nurse');
-    INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('111','2018-08-29','5','111000','1000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('100','2018-12-20','6','100000','12000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('101','2018-12-20','5','101000','10000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('102','2018-11-20','5','102000','10000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('103','2018-10-21','4','103000','12000000','doctor');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('105','2018-08-24','5','105000','5000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('106','2018-08-13','2','106000','2000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('107','2018-09-25','5','107000','9000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('108','2017-09-26','7','108000','1000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('109','2018-08-27','5','109000','1000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('110','2018-07-28','6','110000','1000000','nurse');
+INSERT INTO `medical_staff`(`id`, `start_date`, `YOE`, `license_number`, `salary`, `role`) VALUES ('111','2018-08-29','5','111000','1000000','nurse');
+
 --  Add dữ liệu vào bảng Docter
 INSERT INTO `clinicsystemdb`.`doctor` (`id`, `specialty`) VALUES ('100', 'Sản phụ');
 INSERT INTO `clinicsystemdb`.`doctor` (`id`, `specialty`) VALUES ('101', 'Ngoại khoa');
@@ -108,13 +105,14 @@ INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('10','Dig
 
 
 --  Add dữ liệu vào bảng Appointment
-INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('5', '12:00:00', '13:00:00', '2023-12-01', '4', '10', '0', '1');
-INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('6', '13:00:00', '14:00:00', '2023-12-01', '1', '10', '0', '1');
-INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('7', '14:00:00', '15:00:00', '2023-12-01', '2', '10', '0', '1');
 INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('1', '12:00:00', '13:00:00', '2023-12-15', '0', '10', '0', '1');
 INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('2', '13:00:00', '15:00:00', '2023-12-15', '1', '20', '0', '1');
 INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('3', '15:00:00', '16:00:00', '2023-12-15', '1', '10', '0', '1');
 INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('4', '16:00:00', '17:00:00', '2023-12-15', '0', '10', '0', '1');
+INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('5', '12:00:00', '13:00:00', '2023-12-01', '4', '10', '0', '1');
+INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('6', '13:00:00', '14:00:00', '2023-12-01', '1', '10', '0', '1');
+INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`, `cur_people`, `max_people`, `_status`, `clinic_id`) VALUES ('7', '14:00:00', '15:00:00', '2023-12-01', '2', '10', '0', '1');
+
 
 
 --  Add dữ liệu vào bảng patient_appointment
@@ -183,17 +181,16 @@ INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `q
 
 
 -- kê thuốc
-INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('1', '1', 'Thuốc bổ', '9');
-INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('1', '2', 'Thuốc nhứt nhứt cái đầu', '10');
-INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('2', '7', '', '3');
-INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('3', '6', '', '3');
-INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('2', '6', '', '3');
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('1', '1', 'Uống 3 viên/ngày', '9');
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('1', '2', 'Uống 2 viên/ngày', '10');
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('2', '7', 'Uống 6 viên/ngày', '3');
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('3', '6', 'Ngày nào cũng uống', '3');
+INSERT INTO `clinicsystemdb`.`prescription` (`exam_id`, `serial_num`, `_desc`, `quantity`) VALUES ('2', '6', 'Uống 100 viên/ngày', '3');
 
 
 
 
---- work-with
-
+-- work-with
 INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('105', '100');
 INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('106', '100');
 INSERT INTO `clinicsystemdb`.`work_with` (`nurse_id`, `doctor_id`) VALUES ('107', '101');
