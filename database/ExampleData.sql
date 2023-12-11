@@ -101,7 +101,7 @@ INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('6','Ho�
 INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('7','CumaGold','135000','Trị đại tràng');
 INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('8','Rohto Antibacterial','54000','Bổ mắt, kháng viêm mắt');
 INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('9','V.Rohto Vitamin','53000','Bổ mắt, chậm tăng độ');
-INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) VALUES ('10','Digoxin','300000','Tốt cho tim mạch');
+INSERT INTO `medicine`(`serial_num`, `_name`, `cost`, `_desc`) -VALUES ('10','Digoxin','300000','Tốt cho tim mạch');
 
 
 --  Add dữ liệu vào bảng Appointment
@@ -116,15 +116,15 @@ INSERT INTO `clinicsystemdb`.`appointment` (`id`, `_time`, `_end_time`, `_date`,
 
 
 --  Add dữ liệu vào bảng patient_appointment
-INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('117', '1', 'UNCONFIRM');
-INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('117', '2', 'UNCONFIRM');
-INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('117', '5', 'UNCONFIRM');
-INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('118', '1', 'UNCONFIRM');
-INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('118', '3', 'UNCONFIRM');
-INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('118', '5', 'CONFIRM');
-INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('118', '6', 'CONFIRM');
-INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('119', '5', 'CONFIRM');
-INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('120', '5', 'CONFIRM');
+INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('117', '1', 'unconfirm');
+INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('117', '2', 'unconfirm');
+INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('117', '5', 'unconfirm');
+INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('118', '1', 'unconfirm');
+INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('118', '3', 'unconfirm');
+INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('118', '5', 'done');
+INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('118', '6', 'done');
+INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('119', '5', 'done');
+INSERT INTO `clinicsystemdb`.`patient_appointment` (`patient_id`, `app_id`, `_status`) VALUES ('120', '5', 'done');
 
 
 
