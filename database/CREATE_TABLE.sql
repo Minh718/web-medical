@@ -386,3 +386,19 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER updateBill
+BEFORE UPDATE ON bill
+FOR EACH ROW
+BEGIN
+    IF NEW.is_paid THEN
+        IF TIMESTAMPDIFF(DAY, NEW._timestamp, NOW()) > 5 THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Hóa đơn quá hạn thanh toán tối đa là 5 ngày!';
+        END IF;
+    END IF;
+END //
+DELIMITER ;
+
+
