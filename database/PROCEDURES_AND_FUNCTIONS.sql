@@ -24,22 +24,32 @@ BEGIN
     RETURN revenue;
 END //
 
+
 CREATE PROCEDURE topDoctor(
     IN start_date 	DATE,
     IN end_date		DATE
 )
 BEGIN
-	SELECT 	U.id AS doctor_id, U.fname, U.minit, U.lname, U.gender, U.birthdate, TOP.times
-    FROM 	(SELECT E.doctor_id, COUNT(*) AS times
-			FROM examination AS E
-			WHERE start_date <= E._timestamp AND E._timestamp <= end_date
-			GROUP BY doctor_id 
-			HAVING MAX(COUNT(*))) AS TOP,
-            
-            medical_staff AS MS,
-            
-			_user AS U
-    WHERE TOP.doctor_id = MS.id AND MS.id = U.id;
+    DECLARE most_times INT;
+
+    SELECT MAX(times) INTO most_times
+    FROM (
+        SELECT COUNT(*) AS times
+        FROM examination AS E
+        WHERE start_date <= E._timestamp AND E._timestamp <= end_date
+        GROUP BY E.doctor_id
+    ) AS E
+    LIMIT 1;
+
+    SELECT U.id AS doctor_id, U.fname, U.minit, U.lname, U.gender, U.birthdate, COUNT(*) AS times
+    FROM examination AS E
+    INNER JOIN 
+        medical_staff AS MS ON E.doctor_id = MS.id
+    INNER JOIN 
+        _user AS U ON MS.id = U.id
+    WHERE E._timestamp BETWEEN start_date AND end_date
+    GROUP BY E.doctor_id
+    HAVING times = most_times;
 END //
 
 
