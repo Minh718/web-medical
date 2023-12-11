@@ -11,7 +11,7 @@ BEGIN
     
 	SELECT _user._password INTO passwordUser FROM _user WHERE _user.username = username;
 
-	IF SHA2(_password, 256) != passwordUser THEN
+	IF _password != passwordUser THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Mật khẩu không chính xác';
 	END IF;
     

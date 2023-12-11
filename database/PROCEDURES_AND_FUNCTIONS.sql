@@ -24,7 +24,6 @@ BEGIN
     RETURN revenue;
 END //
 
-
 CREATE PROCEDURE topDoctor(
     IN start_date 	DATE,
     IN end_date		DATE
