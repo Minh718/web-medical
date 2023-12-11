@@ -24,7 +24,6 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Lịch hẹn đã quá hạn';
     END IF;
-<<<<<<< HEAD
     
     IF appointment_date = cur_date THEN
 		IF appointment_time < cur_time THEN
@@ -38,8 +37,6 @@ BEGIN
 			SET MESSAGE_TEXT = 'Không thể đặt lịch hẹn ít hơn 30 phút trước thời gian khám.';
 		END IF;
 	END IF;
-    
-=======
 
     -- Check if the appointment time is less than 30 minutes from the current time
     IF TIMEDIFF(appointment_time, cur_time) < '00:30:00' AND appointment_date = cur_date THEN
@@ -47,7 +44,6 @@ BEGIN
         SET MESSAGE_TEXT = 'Không thể đặt lịch hẹn ít hơn 30 phút trước thời gian khám.';
     END IF;
 
->>>>>>> 3cc4cd92a68c6bf0cc4f7c7bb2551317ee2f5db6
     -- Check if the maximum number of people for the appointment is reached
     IF cur_people >= max_people THEN
         SIGNAL SQLSTATE '45000'
@@ -122,6 +118,8 @@ BEGIN
     DECLARE total_price INT;
     DECLARE temp INT;
     
+    SET total_price = 0;
+    
     -- Checking
 	IF NOT EXISTS (SELECT * FROM service WHERE NEW.service_id = service.id) THEN
         SIGNAL SQLSTATE '45000'
@@ -144,31 +142,48 @@ BEGIN
     END IF;
     -- End checking
     
-    
     SELECT SUM(S.cost) INTO temp
     FROM service AS S
     WHERE NEW.service_id = S.id;
-    SET total_price = temp;
+    IF NOT temp IS NULL THEN
+		SET total_price = total_price + temp;
+    END IF;
     
     SELECT SUM(M.cost * P.quantity) INTO temp
-    FROM medicine AS M,	(SELECT P.exam_id
-						FROM prescription
+    FROM medicine AS M,	(SELECT *
+						FROM prescription AS P
 						WHERE NEW.id = P.exam_id) AS P
     WHERE M.serial_num = P.serial_num;
-	SET total_price = total_price + temp;
-   
+    IF NOT temp IS NULL THEN
+		SET total_price = total_price + temp;
+    END IF;
+    
     SET NEW.total_price = total_price;
 END;
 //
-DELIMITER ;
+
+CREATE TRIGGER insertPrescription
+AFTER INSERT ON prescription
+FOR EACH ROW
+BEGIN
+	DECLARE total_cost INT;
+	SELECT SUM(M.cost * NEW.quantity) INTO total_cost
+    FROM medicine AS M
+    WHERE M.serial_num = NEW.serial_num;
+    
+    UPDATE examination AS E
+    SET E.total_price = E.total_price + total_cost
+    WHERE NEW.exam_id = E.id;
+END;
+//
 
 
-DELIMITER //
 CREATE PROCEDURE insertBill(
 	IN patient_id 	VARCHAR(255)
 )
 BEGIN
     DECLARE total_cost INT;
+    DECLARE bill_id INT;
 	IF NOT EXISTS(SELECT * FROM examination AS E WHERE E.patient_id = patient_id) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Bệnh nhân không có nợ';
 	END IF;
