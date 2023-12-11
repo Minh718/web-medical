@@ -170,7 +170,6 @@ INSERT INTO `clinicsystemdb`.`work_at` (`ms_id`, `room_num`, `clinic_id`) VALUES
 
 
 -- medician in clinic
-
 INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `quantity`) VALUES ('1', '1', '500');
 INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `quantity`) VALUES ('1', '2', '400');
 INSERT INTO `clinicsystemdb`.`medicine_in_clinic` (`clinic_id`, `serial_num`, `quantity`) VALUES ('2', '1', '300');

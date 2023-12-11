@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS room
     clinic_id		INT,
     _name			VARCHAR(50)			NOT NULL,
 	_desc			VARCHAR(200),
-    is_active		BOOL				NOT NULL DEFAULT 0,
+    is_active		BOOL				NOT NULL DEFAULT FALSE,
     doctor_id 		INT,
     
     PRIMARY KEY (num, clinic_id),
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS doctor
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS  nurse
+CREATE TABLE IF NOT EXISTS nurse
 (
 	id 				INT 				PRIMARY KEY,
 
@@ -277,7 +277,8 @@ CREATE TABLE IF NOT EXISTS prescription
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS clinic_hotline(
+CREATE TABLE IF NOT EXISTS clinic_hotline
+(
 	clinic_id 			INT,
     hotline				INT,
     
@@ -305,7 +306,8 @@ CREATE TABLE IF NOT EXISTS clinic_worktime
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS examination_allergy(
+CREATE TABLE IF NOT EXISTS examination_allergy
+(
 	exam_id 			INT,
     allergy				INT,
     

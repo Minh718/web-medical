@@ -198,7 +198,7 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Chỉ có hai loại: `doctor` và `nurse`';
     END IF;
     
-    IF _type = 'doctor' AND specialty = NULL THEN
+    IF _type = 'doctor' AND specialty IS NULL THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Bác sĩ phải có tên chuyên ngành!';
     END IF;
     
