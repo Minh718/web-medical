@@ -105,14 +105,6 @@ BEGIN
 		END IF;
 	END IF;
 
-<<<<<<< HEAD
-=======
-    -- Check if the appointment time is less than 30 minutes from the current time
-    IF TIMEDIFF(appointment_time, cur_time) < '00:30:00' AND appointment_date = cur_date THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Chỉ có thể hủy lịch hẹn trước giờ hẹn 30 phút';
-    END IF;
->>>>>>> 3cc4cd92a68c6bf0cc4f7c7bb2551317ee2f5db6
     -- Update the current number of people
     UPDATE appointment 
     SET cur_people = cur_people - 1 
