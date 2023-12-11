@@ -11,7 +11,6 @@ BEGIN
 	RETURN email REGEXP email_pattern;
 END //
 
-
 CREATE FUNCTION isValidPhoneNumber(
 	phone_num	VARCHAR(20)
 )
@@ -21,7 +20,6 @@ BEGIN
 	SET phone_num_pattern = '^[0-9]{10,11}$';
 	RETURN phone_num REGEXP phone_num_pattern;
 END //
-
 
 CREATE PROCEDURE insertUser(
     IN fname		VARCHAR(20),
@@ -37,6 +35,9 @@ CREATE PROCEDURE insertUser(
     IN _type       	VARCHAR(20)
 )
 BEGIN
+	DECLARE last_user_id INT;
+	DECLARE is_active BOOL;
+
     IF LENGTH(fname) <= 1 OR LENGTH(lname) <= 1 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Tên có độ dài quá ngắn! Họ hoặc tên phải > 1 kí tự';
     END IF;
@@ -81,10 +82,38 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Mật khẩu phải chứa ít nhất một chữ cái và một số!';
     END IF;
 	
-    INSERT INTO _user(fname, minit, lname, gender, birthdate, addr, email, phone_num, username, _password)
-    VALUES (fname, minit, lname, gender, STR_TO_DATE(birthdate, '%d-%m-%Y'), addr, email, phone_num, username, _password);
+    IF _type = "nurse" OR _type = "doctor" THEN
+		IF TIMESTAMPDIFF(YEAR, STR_TO_DATE(birthdate, '%d-%m-%Y'), CURDATE()) < 18 THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nhân viên của phòng khám luôn trên 18 tuổi';
+		END IF;
+        
+		SET is_active = FALSE;
+    END IF;
     
-  END //
+    INSERT INTO _user(fname, minit, lname, gender, birthdate, addr, email, phone_num, is_active, username, _password)
+    VALUES (fname, minit, lname, gender, STR_TO_DATE(birthdate, '%d-%m-%Y'), addr, email, phone_num, is_active, username, _password);
+    
+    SET last_user_id = LAST_INSERT_ID();
+    
+    IF _type = "patient" THEN
+		INSERT INTO patient(id)
+		VALUES (last_user_id);
+    ELSEIF _type = "nurse" THEN
+		INSERT INTO medical_staff(id)
+		VALUES (last_user_id);
+        
+		INSERT INTO nuser(id)
+		VALUES (last_user_id);
+    ELSEIF _type = "doctor" THEN
+		INSERT INTO medical_staff(id)
+		VALUES (last_user_id);
+    
+		INSERT INTO doctor(id)
+		VALUES (last_user_id);
+    ELSE 
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Tham số type ngoài miền giá trị!';
+	END IF;
+END //
 
 CREATE PROCEDURE updateInfoUser(
     IN id       	INT,
@@ -162,19 +191,34 @@ BEGIN
 	WHERE _user.id = id;
 END //
 
+CREATE PROCEDURE deactiveUserById(
+    IN id		INT
+)
+BEGIN
+	IF NOT EXISTS (SELECT * FROM _user AS U WHERE U.id = id) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Id không tồn tại';
+    END IF;
+    
+	UPDATE _user
+    SET _user.is_active = FALSE
+    WHERE _user.id = id;
+END // 
+
 CREATE PROCEDURE deleteUserById(
     IN id		INT
 )
 BEGIN
-	DECLARE _type VARCHAR(20);
-	DECLARE is_active BOOL;
-	IF NOT EXISTS (SELECT id FROM _user WHERE _user.id = id) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Id của user không tồn tại';
-	END IF;
+    IF EXISTS (SELECT * FROM patient AS P WHERE P.id = id) THEN
+		IF EXISTS (SELECT * FROM patient_appointment AS PA WHERE PA.patient_id = id) THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Không thể xóa tài khoản vì có liên kết với bảng patient_appointment';
+        END IF;
+        
+        IF EXISTS (SELECT * FROM examination AS E WHERE E.patient_id = id) THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Không thể xóa tài khoản vì có liên kết với bảng examination';
+        END IF;
+    END IF;
     
-	SELECT type, _user.is_active INTO _type, is_active FROM _user WHERE _user.id = id;
-    
-	IF _type = 'staff' AND is_active = 1 THEN
+    IF EXISTS (SELECT * FROM medical_staff AS MS WHERE MS.id = id) THEN
 		IF EXISTS (SELECT * FROM work_at WHERE work_at.ms_id = id) THEN
 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Không thể xóa tài khoản vì có liên kết với bảng work_at';
         END IF;
@@ -190,10 +234,9 @@ BEGIN
         IF EXISTS (SELECT * FROM work_with WHERE work_with.doctor_id = id OR work_with.nurse_id = id) THEN
 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Không thể xóa tài khoản vì có liên kết với bảng work_with';
         END IF;
-	END IF;
-    
-	DELETE FROM _user WHERE _user.id = id;	
+    END IF;
 END //
+
 DELIMITER ;
 
 

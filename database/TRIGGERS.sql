@@ -154,18 +154,32 @@ BEGIN
     
     SELECT SUM(M.cost * P.quantity) INTO temp
     FROM medicine AS M,	(SELECT P.exam_id
-						FROM prescription
+						FROM prescription AS P
 						WHERE NEW.id = P.exam_id) AS P
     WHERE M.serial_num = P.serial_num;
+    
 	SET total_price = total_price + temp;
-   
     SET NEW.total_price = total_price;
 END;
 //
-DELIMITER ;
 
+CREATE TRIGGER insertPrescription
+AFTER INSERT ON prescription
+FOR EACH ROW
+BEGIN
+	DECLARE total_cost INT;
+	SELECT SUM(M.cost * P.quantity) INTO total_cost
+    FROM medicine AS M,	(SELECT P.exam_id
+						FROM prescription AS P
+						WHERE NEW.id = P.exam_id) AS P
+    WHERE M.serial_num = P.serial_num;
+    
+    UPDATE examination AS E
+    SET E.total_price = E.total_price + total_cost
+    WHERE NEW.exam_id = E.id;
+END;
+//
 
-DELIMITER //
 CREATE PROCEDURE insertBill(
 	IN patient_id 	VARCHAR(255)
 )

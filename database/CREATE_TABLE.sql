@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS service
 
 CREATE TABLE IF NOT EXISTS work_at
 (
-	ms_id 			INT					PRIMARY KEY,
+	ms_id 			INT				PRIMARY KEY,
     room_num 		INT,
     clinic_id 		INT,
     
@@ -243,10 +243,13 @@ CREATE TABLE IF NOT EXISTS medicine_in_clinic
     serial_num 			VARCHAR(50),
     quantity 			INT					NOT NULL DEFAULT 0,
     
+    PRIMARY KEY (clinic_id, serial_num),
+    
     CONSTRAINT medicine_in_clinic_check_1
 		CHECK (quantity >= 0),
-    
-    PRIMARY KEY (clinic_id, serial_num),
+        
+	CONSTRAINT medicine_in_clinic_check_2
+		CHECK (quantity > 0),
     
     CONSTRAINT fk_medicine_in_clinic_clinic_id 		FOREIGN KEY (clinic_id)
 		REFERENCES clinic(id) 							
@@ -254,9 +257,7 @@ CREATE TABLE IF NOT EXISTS medicine_in_clinic
     
     CONSTRAINT fk_medicine_in_clinic_serial_num 	FOREIGN KEY (serial_num)
 		REFERENCES medicine(serial_num) 				
-        ON DELETE CASCADE,
-    
-    CHECK (quantity > 0)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS prescription
@@ -366,6 +367,7 @@ BEGIN
 		SIGNAL SQLSTATE '45000'
 		SET MESSAGE_TEXT = 'Không thể đăng ký cuộc hẹn vì đã lỡ hẹn quá 5 lần trong một năm';
     END IF;
+END //
 DELIMITER ;
 
 
