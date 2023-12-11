@@ -237,6 +237,39 @@ BEGIN
     END IF;
 END //
 
+CREATE PROCEDURE setActiveById(
+	IN id		INT
+)
+BEGIN
+	IF NOT EXISTS (SELECT * FROM _user AS U WHERE U.id = id) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Không tìm thấy id của user!';
+    END IF;
+    
+    UPDATE _user AS U
+    SET U.is_active = TRUE
+    WHERE U.id = id;
+END//
+
+CREATE PROCEDURE setAdminById(
+	IN id		INT
+)
+BEGIN
+	DECLARE is_active BOOL;
+	IF NOT EXISTS (SELECT * FROM _user AS U WHERE U.id = id) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Không tìm thấy id của user!';
+    END IF;
+    
+    SELECT U.is_active INTO is_active
+    FROM _user AS U
+    WHERE U.id = id;
+    IF NOT is_active THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Tài khoản bị vô hiệu hóa!';
+    END IF;
+    
+    UPDATE _user AS U
+    SET U.is_admin = TRUE
+    WHERE U.id = id;
+END
 DELIMITER ;
 
 

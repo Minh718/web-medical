@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS _user
     is_active		BOOL				NOT NULL 	DEFAULT FALSE,
     username		VARCHAR(50)			NOT NULL 	UNIQUE,
     _password		VARCHAR(255) 		NOT NULL,
+    is_admin		BOOL   				NOT NULL DEFAULT FALSE,
     type          	VARCHAR(20)			NOT NULL,
     
     CONSTRAINT user_check_1
